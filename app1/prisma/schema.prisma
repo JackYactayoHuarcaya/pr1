@@ -1,0 +1,36 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+
+model User {
+  id Int @id @default(autoincrement())
+  nombre String?
+  idType Int? 
+
+  category Category? @relation(fields: [idType], references: [id])
+
+  @@map("users")
+}
+
+model Category {
+  id Int @id @default(autoincrement())
+  nombre String?
+  comentario String?
+  users User[]
+  
+  @@map("categories")
+}
+
